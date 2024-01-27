@@ -42,16 +42,16 @@ velocityY = 0
 def change_direction(e):
     global velocityX, velocityY
 
-    if(e.keysym == "Up"):
+    if(e.keysym == "Up" and velocityY != 1):
         velocityX = 0
         velocityY = -1
-    elif (e.keysym == "Down"):
+    elif (e.keysym == "Down" and velocityY != -1):
         velocityX = 0
         velocityY = 1
-    elif (e.keysym == "Left"):
+    elif (e.keysym == "Left" and velocityX != 1):
         velocityX = -1
         velocityY = 0
-    elif (e.keysym == "Right"):
+    elif (e.keysym == "Right" and velocityX != -1):
         velocityX = 1
         velocityY = 0
 
@@ -67,11 +67,11 @@ def draw():
 
     canvas.delete("all")
 
-    #Draw Snake
-    canvas.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill = "lime green")
-
     #Draw Food
     canvas.create_rectangle(food.x, food.y, food.x + TILE_SIZE, food.y + TILE_SIZE, fill = "red")
+
+    #Draw Snake
+    canvas.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill = "lime green")
 
     window.after(100, draw) # Call draw function after every 100 milliseconds
 
