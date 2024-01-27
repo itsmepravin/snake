@@ -36,6 +36,7 @@ window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
 #Initialize Game
 snake = Tile(5*TILE_SIZE, 5*TILE_SIZE) #Snake's Head
 food = Tile(10*TILE_SIZE, 10*TILE_SIZE) #Food
+snake_body = [] 
 velocityX = 0
 velocityY = 0
 
@@ -58,6 +59,23 @@ def change_direction(e):
 def move():
     global snake
 
+    #Collision
+    if (snake.x == food.x and snake.y == food.y):
+        snake_body.append(Tile(food.x, food.y))
+        food.x = random.randint(0, COLS - 1) * TILE_SIZE
+        food.y = random.randint(0, ROWS - 1) * TILE_SIZE
+
+    # Update Snake Body
+    for i in range(len(snake_body) - 1, -1, -1):
+        tile = snake_body[i]
+        if (i == 0):
+            tile.x = snake.x
+            tile.y = snake.y
+        else:
+            prev_tile = snake_body[i-1]
+            tile.x = prev_tile.x
+            tile.y = prev_tile.y
+
     snake.x += velocityX * TILE_SIZE
     snake.y += velocityY * TILE_SIZE 
 
@@ -72,6 +90,9 @@ def draw():
 
     #Draw Snake
     canvas.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill = "lime green")
+
+    for tile in snake_body:
+        canvas.create_rectangle(tile.x, tile.y, tile.x + TILE_SIZE, tile.y + TILE_SIZE, fill = "lime green")
 
     window.after(100, draw) # Call draw function after every 100 milliseconds
 
