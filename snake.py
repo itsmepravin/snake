@@ -34,7 +34,8 @@ window_y = int((screen_height / 2) - (window_height / 2))
 window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
 
 #Initialize Game
-snake = Tile(5*TILE_SIZE, 5*TILE_SIZE) #Snake's Head as Single Tile
+snake = Tile(5*TILE_SIZE, 5*TILE_SIZE) #Snake's Head
+food = Tile(10*TILE_SIZE, 10*TILE_SIZE) #Food
 
 def draw():
     global snake
@@ -42,6 +43,11 @@ def draw():
     #Draw Snake
     canvas.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill = "lime green")
 
+    #Draw Food
+    canvas.create_rectangle(food.x, food.y, food.x + TILE_SIZE, food.y + TILE_SIZE, fill = "red")
+
     window.after(100, draw) # Call draw function after every 100 milliseconds
+
+draw()
 
 window.mainloop()
