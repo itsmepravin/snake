@@ -67,6 +67,11 @@ def move():
     if (snake.x < 0 or snake.x >= WINDOW_WIDTH or snake.y < 0 or snake.y >= WINDOW_HEIGHT):
         game_over =True
         return
+    
+    for tile in snake_body:
+        if (snake.x == tile.x and snake.y == tile.y):
+            game_over = True
+            return
 
     #Collision
     if (snake.x == food.x and snake.y == food.y):
