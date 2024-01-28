@@ -39,9 +39,12 @@ food = Tile(10*TILE_SIZE, 10*TILE_SIZE) #Food
 snake_body = [] 
 velocityX = 0
 velocityY = 0
+game_over = False
 
 def change_direction(e):
     global velocityX, velocityY
+    if game_over:
+        return
 
     if(e.keysym == "Up" and velocityY != 1):
         velocityX = 0
@@ -57,7 +60,13 @@ def change_direction(e):
         velocityY = 0
 
 def move():
-    global snake
+    global snake, food, snake_body, game_over
+    if game_over:
+        return
+    
+    if (snake.x < 0 or snake.x >= WINDOW_WIDTH or snake.y < 0 or snake.y >= WINDOW_HEIGHT):
+        game_over =True
+        return
 
     #Collision
     if (snake.x == food.x and snake.y == food.y):
